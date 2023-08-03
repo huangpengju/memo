@@ -2,7 +2,7 @@
 **此项目使用 `Gin`+`Gorm` ，基于 `RESTful API`实现的一个备忘录**。  
 
 ## 理论准备
-***什么是 REST？**  
+**什么是 REST？**  
 由 Roy Thomas Fielding 在他2000年的博士论文中提出：  
 在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到一个功能强、性能好、适宜通信的架构。  
 他对**互联网软件**的架构原则，定名为 **REST**（Representational State Transfer）。  
