@@ -1,5 +1,50 @@
 # memo 备忘录
-**此项目使用 `Gin`+`Gorm` ，基于 `RESTful API`实现的一个备忘录**。  
+## 项目介绍
+**此项目使用 `G0` + `Gin` + `Gorm` + `Redis` + `JWT` + `MySQL` ，基于 `RESTful API`实现的一个备忘录**。  
+
+## 项目功能
+* 用户注册登录
+* 新增/删除/修改/查询/ 备忘录
+* Redis 存储每条备忘录的浏览次数
+* 分页搜索功能
+
+## 项目主要依赖
+* Go
+* Gin
+* Gorm
+* MySQL
+* Redis
+* INI
+* jwt-go
+
+## 项目结构
+memo
+├── api                        //
+├── conf                       //
+├── middleware                 //
+├── model                      //
+├── pkg                        //
+├── routes                     //
+├── serializer                 //
+├── serive                     //
+│   ├──                        //
+│   │   ├──                    // 
+│   │   ├──                    // 
+│   │   ├──                    // 
+│   │   └──                    // 
+├── cache                      //
+│   ├──                        //
+│   │   ├──                    // 
+│   │   ├──                    // 
+│   │   ├──                    // 
+│   │   └──                    // 
+├──                            // 配置文件
+├── main.go
+│   │   └── main()             // 程序入口
+└── README.md
+
+## 项目构建运行
+本项目使用go mod进行管理，因此可以通过go mod tidy下载所需的依赖，通过go run main.go启动该项目。
 
 ## 理论准备（RESTful API —— 入门理解）
 **什么是 REST？**  
@@ -146,3 +191,6 @@ JWT（JSON Web Token）提供了一个轻量级的解决方案。
 RESTful 架构  
 是基于互联网环境的架构  
 是架构风格而不是标准！  
+
+
+https://gitee.com/tonghuaing/go_web_todo
