@@ -18,6 +18,7 @@
 * jwt-go
 
 ## 项目结构
+```
 memo
 ├── api                        //
 ├── conf                       //
@@ -42,6 +43,7 @@ memo
 ├── main.go
 │   │   └── main()             // 程序入口
 └── README.md
+```
 
 ## 项目构建运行
 本项目使用go mod进行管理，因此可以通过go mod tidy下载所需的依赖，通过go run main.go启动该项目。
