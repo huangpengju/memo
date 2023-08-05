@@ -22,9 +22,12 @@
 memo
 ├── api                        // 用于定义接口函数
 ├── cache                      // 放置 redis 缓存
-├── conf                       // 用于存储配置文件
+├── conf                       // 处理配置数据文件夹
+│   ├── conf.go                // 读取配置数据
+│   └── config.ini             // 配置文件
 ├── middleware                 // 应用中间件  jwt
 ├── model                      // 应用数据库模型
+│   ├── init.go                // 连接数据库
 ├── pkg                        // 
 │   ├── e                      // 封装错误码
 │   ├── logging                // 日志打印
