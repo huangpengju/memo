@@ -14,31 +14,24 @@
 * Gorm
 * MySQL
 * Redis
-* INI
+* ini
 * jwt-go
 
 ## 项目结构
 ```
 memo
-├── api                        //
-├── conf                       //
-├── middleware                 //
-├── model                      //
-├── pkg                        //
-├── routes                     //
-├── serializer                 //
-├── serive                     //
-│   ├──                        //
-│   │   ├──                    // 
-│   │   ├──                    // 
-│   │   ├──                    // 
-│   │   └──                    // 
-├── cache                      //
-│   ├──                        //
-│   │   ├──                    // 
-│   │   ├──                    // 
-│   │   ├──                    // 
-│   │   └──                    // 
+├── api                        // 用于定义接口函数
+├── cache                      // 放置 redis 缓存
+├── conf                       // 用于存储配置文件
+├── middleware                 // 应用中间件  jwt
+├── model                      // 应用数据库模型
+├── pkg                        // 
+│   ├── e                      // 封装错误码
+│   ├── logging                // 日志打印
+│   └── utils                  // 工具函数
+├── routes                     // 路由逻辑处理
+├── serializer                 // 将数据序列化为 json 的函数
+├── serive                     // 接口函数的实现
 ├──                            // 配置文件
 ├── main.go
 │   │   └── main()             // 程序入口
