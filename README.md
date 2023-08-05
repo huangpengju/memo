@@ -10,11 +10,11 @@
 
 ## 项目主要依赖
 * Go
-* Gin
-* Gorm
-* MySQL
+* Gin               // 连接数据库时用到的依赖：go get -u github.com/gin-gonic/gin"
+* Gorm              // 连接数据库时用到的依赖：go get -u github.com/jinzhu/gorm
+* MySQL             // 连接数据库时用到的依赖（mysql数据库驱动）：go get -u github.com/jinzhu/gorm/dialects/mysql
 * Redis
-* ini
+* ini               // 读取配置文件 config.ini 时用到的依赖： go get gopkg.in/ini.v1
 * jwt-go
 
 ## 项目结构
