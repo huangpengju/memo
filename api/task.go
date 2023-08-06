@@ -58,3 +58,16 @@ func ListTask(c *gin.Context) {
 		c.JSON(400, ErrorResponse(err))
 	}
 }
+
+// 修改备忘录
+func UpdateTask(c *gin.Context) {
+	var updateTask service.UpdateTaskService
+
+	if err := c.ShouldBind(&updateTask); err == nil {
+		res := updateTask.Update(c.Param("id"))
+		c.JSON(200, res)
+	} else {
+		logging.Error(err)
+		c.JSON(400, ErrorResponse(err))
+	}
+}

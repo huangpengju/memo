@@ -36,8 +36,12 @@ func NewRouter() *gin.Engine {
 			authed.POST("task", api.CreateTask)
 			// 查询一条备忘录
 			authed.GET("task/:id", api.ShowTask)
-			// 查询所有的备忘录
+			// 查询所有的备忘录(POST方法)
 			authed.POST("tasks", api.ListTask)
+			// 查询所有的备忘录(GET方法)
+
+			// 修改当前备忘录
+			authed.PUT("task/:id", api.UpdateTask)
 		}
 	}
 	return r

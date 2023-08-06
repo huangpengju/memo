@@ -19,10 +19,18 @@ type ShowTaskService struct {
 }
 
 // ListTaskService 结构体用于查询所有备忘录时，接收查询条件
-
+// 该结构体拥有 List 方法
 type ListTaskService struct {
 	PageNum  int `json:"page_num" form:"page_num"`   // 当前页
 	PageSize int `json:"page_size" form:"page_size"` // 每页最多显示多少条
+}
+
+// 更新
+// Update()方法的接收者
+type UpdateTaskService struct {
+	Title   string `json:"title" form:"title"`
+	Content string `json:"content" form:"content"`
+	Status  int    `json:"status" form:"status"`
 }
 
 // Create
@@ -92,4 +100,27 @@ func (service *ListTaskService) List(uid uint) serializer.Response {
 		Offset((service.PageNum - 1) * service.PageSize).Find(&tasks)
 	return serializer.BuildListResponse(serializer.BuildTasks(tasks), uint(count))
 
+}
+
+// 更新备忘录
+func (service *UpdateTaskService) Update(tid string) serializer.Response {
+	var task model.Task
+	code := 200
+	model.DB.First(&task, tid)
+	task.Content = service.Content
+	task.Title = service.Title
+	task.Status = service.Status
+	err := model.DB.Save(&task).Error
+	if err != nil {
+		code = 500
+		return serializer.Response{
+			Status: code,
+			Msg:    "修改失败",
+		}
+	}
+	return serializer.Response{
+		Status: code,
+		Data:   serializer.BuildTask(task),
+		Msg:    "修改成功",
+	}
 }
