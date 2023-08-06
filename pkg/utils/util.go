@@ -8,10 +8,11 @@ import (
 
 var JWTsecret = []byte("ABAB")
 
+// Claims 是Token所有者的结构
 type Claims struct {
-	Id       uint   `json:"id"`
-	UserName string `json:"user_name"`
-	Password string `json:"password"`
+	Id       uint   `json:"id"`        // 用户的id
+	UserName string `json:"user_name"` // 用户名
+	Password string `json:"password"`  // 用户密码
 	jwt.StandardClaims
 }
 
@@ -34,4 +35,17 @@ func GenerateToken(id uint, username, password string) (string, error) {
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenClaims.SignedString(JWTsecret)
 	return token, err
+}
+
+// ParseToken 解析 Token
+func ParseToken(token string) (*Claims, error) {
+	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return JWTsecret, nil
+	})
+	if tokenClaims != nil {
+		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {
+			return claims, nil
+		}
+	}
+	return nil, err
 }

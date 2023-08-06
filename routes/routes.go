@@ -2,6 +2,7 @@ package routes
 
 import (
 	"memo/api"
+	"memo/middleware"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
@@ -26,6 +27,14 @@ func NewRouter() *gin.Engine {
 		// 用户注册操作
 		v1.POST("user/register", api.UserRegister)
 		v1.POST("user/login", api.UserLogin)
+
+		authed := v1.Group("/")
+		// JWT() 检查 token
+		authed.Use(middleware.JWT())
+		{
+			// 创建备忘录
+			authed.POST("task", api.CreateTask)
+		}
 	}
 	return r
 }
