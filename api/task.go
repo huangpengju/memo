@@ -71,3 +71,17 @@ func UpdateTask(c *gin.Context) {
 		c.JSON(400, ErrorResponse(err))
 	}
 }
+
+// SearchTask 模糊查询
+func SearchTask(c *gin.Context) {
+	var searchTask service.SearchTaskService
+
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	if err := c.ShouldBind(&searchTask); err == nil {
+		res := searchTask.Search(claim.Id)
+		c.JSON(200, res)
+	} else {
+		logging.Error(err)
+		c.JSON(400, ErrorResponse(err))
+	}
+}

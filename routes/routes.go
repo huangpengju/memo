@@ -42,6 +42,9 @@ func NewRouter() *gin.Engine {
 
 			// 修改当前备忘录
 			authed.PUT("task/:id", api.UpdateTask)
+
+			// 搜索一条备忘录
+			authed.POST("search", api.SearchTask)
 		}
 	}
 	return r
