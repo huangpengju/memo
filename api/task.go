@@ -30,3 +30,17 @@ func CreateTask(c *gin.Context) {
 	}
 
 }
+
+// ShowTask 查询备忘录详情
+func ShowTask(c *gin.Context) {
+	// 声明 createTask 结构接受 请求中的参数
+	var showTask service.ShowTaskService
+
+	if err := c.ShouldBind(&showTask); err == nil {
+		res := showTask.Show(c.Param("id"))
+		c.JSON(200, res)
+	} else {
+		logging.Error(err)
+		c.JSON(400, ErrorResponse(err))
+	}
+}

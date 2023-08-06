@@ -34,6 +34,8 @@ func NewRouter() *gin.Engine {
 		{
 			// 创建备忘录
 			authed.POST("task", api.CreateTask)
+			// 查询一条备忘录
+			authed.GET("task/:id", api.ShowTask)
 		}
 	}
 	return r
