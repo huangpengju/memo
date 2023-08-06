@@ -23,8 +23,9 @@ func NewRouter() *gin.Engine {
 	v1 := r.Group("api/v1")
 	// {} 是书写规范
 	{
-		// 用户操作
+		// 用户注册操作
 		v1.POST("user/register", api.UserRegister)
+		v1.POST("user/login", api.UserLogin)
 	}
 	return r
 }

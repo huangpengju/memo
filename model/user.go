@@ -26,3 +26,13 @@ func (user *User) SetPassword(password string) error {
 	user.PassWordDigest = string(bytes)
 	return nil
 }
+
+// CheckPassword 对比密码
+// 方法的接收者 User 模型
+// 方法的参数 password 是未加密的密码
+// 方法的返回值 true（密码相等） 或 false(密码不相等)
+func (user *User) CheckPassword(password string) bool {
+	// CompareHashAndPassword比较bcrypt哈希后的密码与可能的密码明文等价。成功时返回nil，失败时返回错误。
+	err := bcrypt.CompareHashAndPassword([]byte(user.PassWordDigest), []byte(password))
+	return err == nil
+}

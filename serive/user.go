@@ -1,9 +1,12 @@
-package serive
+package service
 
 import (
 	"fmt"
 	"memo/model"
+	"memo/pkg/utils"
 	"memo/serializer"
+
+	"github.com/jinzhu/gorm"
 )
 
 // 用户服务
@@ -54,5 +57,57 @@ func (service *UserService) Register() serializer.Response {
 	return serializer.Response{
 		Status: 200,
 		Msg:    "用户注册成功",
+	}
+}
+
+// Login 用户登录
+// 方法的接收者是 UserService
+// 方法返回 Json 格式数据
+func (service *UserService) Login() serializer.Response {
+	var user model.User
+
+	// 先验证用户
+	// 查询条件是 接收的参数
+	if err := model.DB.Where("user_name=?", service.UserName).First(&user).Error; err != nil {
+		// 如果记录未找到 err = RecordNotFound
+		// 如果error包含RecordNotFound错误 IsRecordNotFoundError 返回 true
+		if gorm.IsRecordNotFoundError(err) {
+			return serializer.Response{
+				Status: 400,
+				Data:   err,
+				Msg:    "用户不存在,请先登录",
+			}
+		}
+		// 用户存在，是其他因素的错误
+		return serializer.Response{
+			Status: 500,
+			Data:   err,
+			Msg:    "数据库查询登录用户信息出错",
+		}
+	}
+	// 找到用户后
+	// 去验证登录用户的密码
+	if !user.CheckPassword(service.PassWord) {
+		// 密码不相等时
+		return serializer.Response{
+			Status: 400,
+			Msg:    "密码错误",
+		}
+	}
+	// 密码匹配成功后,响应用户信息和token
+
+	// 准备一个 token ,作为响应返回
+	token, err := utils.GenerateToken(user.ID, user.UserName, service.PassWord)
+	if err != nil {
+		return serializer.Response{
+			Status: 500,
+			Msg:    "Token签发出错",
+		}
+	}
+	// 返回用户信息和token
+	return serializer.Response{
+		Status: 200,
+		Data:   serializer.TokenData{User: serializer.Builduser(user), Token: token},
+		Msg:    "登录成功",
 	}
 }
