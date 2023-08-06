@@ -1,3 +1,5 @@
+// model 包是应用数据库模型
+// init.go 用于项目连接数据库
 package model
 
 import (
@@ -13,6 +15,7 @@ var DB *gorm.DB
 
 func Database(Db, DSN string) {
 	db, err := gorm.Open(Db, DSN)
+
 	if err != nil {
 		fmt.Printf("数据库连接错误：= %v", err)
 		panic("数据库连接错误")
@@ -35,4 +38,6 @@ func Database(Db, DSN string) {
 	// 连接时间
 	db.DB().SetConnMaxLifetime(time.Second * 30)
 	DB = db
+	// 数据库连接后，进行数据库迁移
+	migration()
 }

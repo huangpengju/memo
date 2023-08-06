@@ -1,3 +1,4 @@
+// conf 包是处理配置数据
 package conf
 
 import (
