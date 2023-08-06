@@ -14,7 +14,15 @@ type CreateTaskService struct {
 }
 
 // ShowTaskService 结构体用于查询一条备忘录时接受请求中的参数
+// ShowTaskService 同时是查询备忘录 Show 方法的接收者
 type ShowTaskService struct {
+}
+
+// ListTaskService 结构体用于查询所有备忘录时，接收查询条件
+
+type ListTaskService struct {
+	PageNum  int `json:"page_num" form:"page_num"`   // 当前页
+	PageSize int `json:"page_size" form:"page_size"` // 每页最多显示多少条
 }
 
 // Create
@@ -66,4 +74,22 @@ func (service *ShowTaskService) Show(tid string) serializer.Response {
 		Data:   serializer.BuildTask(task),
 		Msg:    "查询成功",
 	}
+}
+
+// List 列表返回用户所有备忘录
+func (service *ListTaskService) List(uid uint) serializer.Response {
+	// 定义一个切片
+	var tasks []model.Task
+
+	count := 0
+
+	// 如果请求中的 PageSize 为0，则默认显示每页10条
+	if service.PageSize == 0 {
+		service.PageSize = 10
+	}
+
+	model.DB.Model(&model.Task{}).Preload("User").Where("uid=?", uid).Count(&count).Limit(service.PageSize).
+		Offset((service.PageNum - 1) * service.PageSize).Find(&tasks)
+	return serializer.BuildListResponse(serializer.BuildTasks(tasks), uint(count))
+
 }

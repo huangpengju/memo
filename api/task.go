@@ -44,3 +44,17 @@ func ShowTask(c *gin.Context) {
 		c.JSON(400, ErrorResponse(err))
 	}
 }
+
+// 查询所有备忘录
+func ListTask(c *gin.Context) {
+	var listTask service.ListTaskService
+	claim, _ := utils.ParseToken(c.GetHeader("Authorization"))
+
+	if err := c.ShouldBind(&listTask); err == nil {
+		res := listTask.List(claim.Id)
+		c.JSON(200, res)
+	} else {
+		logging.Error(err)
+		c.JSON(400, ErrorResponse(err))
+	}
+}

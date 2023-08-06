@@ -13,6 +13,7 @@ type Task struct {
 	EndTime   int64  `json:"end_time"`
 }
 
+// 一条备忘录的处理 序列化
 func BuildTask(item model.Task) Task {
 	return Task{
 		ID:        item.ID,
@@ -23,4 +24,13 @@ func BuildTask(item model.Task) Task {
 		StartTime: item.StartTime,
 		EndTime:   item.EndTime,
 	}
+}
+
+// 多条备忘录的处理
+func BuildTasks(items []model.Task) (tasks []Task) {
+	for _, item := range items {
+		task := BuildTask(item)
+		tasks = append(tasks, task)
+	}
+	return tasks
 }
