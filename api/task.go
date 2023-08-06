@@ -85,3 +85,18 @@ func SearchTask(c *gin.Context) {
 		c.JSON(400, ErrorResponse(err))
 	}
 }
+
+// 删除
+func DeleteTask(c *gin.Context) {
+	var deleteTask service.DeleteTaskService
+
+	// claim,_:=utils.ParseToken(c.GetHeader("Authorization"))
+	if err := c.ShouldBind(&deleteTask); err == nil {
+		res := deleteTask.Delete(c.Param("id"))
+		c.JSON(200, res)
+	} else {
+		logging.Error(err)
+		c.JSON(400, ErrorResponse(err))
+	}
+
+}

@@ -45,6 +45,9 @@ func NewRouter() *gin.Engine {
 
 			// 搜索一条备忘录
 			authed.POST("search", api.SearchTask)
+
+			// 删除一条备忘录
+			authed.DELETE("task/:id", api.DeleteTask)
 		}
 	}
 	return r
